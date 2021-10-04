@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Details</title>
+  </head>
+  <body>
+    <h1>Details page</h1>
+
+    <div class="container">
+       <div class="row">
+          <div class="col-md-6">
+             <div class="row">
+                 <div class="col-md-12" id="nm{{product_object.id}}">
+                    <img src="{{product_object.image}}" class="card-img-top">
+                 </div>
+
+             </div>
+          </div>
+          <div class="col-md-6">
+             <div class="row">
+                <div class="col-md-12">
+                   {{product_object.title}}
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   {{product_object.price}}
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   {{product_object.discounted_price}}
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-md-12">
+                   {{product_object.description}}
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+<button id="new" type="button" class="btn new btn-warning">Add to Cart</button>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+  <script type="text/javascript">
+     $(document).on('click','.new',function(){
+console.log("the link is clicked");
+document.getElementById("new").innerHTML="Added to Cart";
+
+     });
+
+     if(localStorage.getItem('cart')==null){
+     var cart={};
+  }
+  else{
+     cart=JSON.parse(localStorage.getItem('cart'));
+  }
+
+   $(document).on('click','.atc',function(){
+    console.log("add to cart");
+
+    var item_id=this.id.toString();
+    console.log(item_id);
+
+    if(cart[item_id]!=undefined){   //cart[item_id] is defined
+    quantity=cart[item_id][0]+1;
+    cart[item_id][0]=quantity;
+  }
+  else{
+     quantity=1;
+     name=document.getElementById("nm"+item_id).innerHTML;
+     cart[item_id]=[quantity,name];
+  }
+
+  console.log(cart);
+  localStorage.setItem('cart',JSON.stringify(cart));
+  document.getElementById("cart").innerHTML="Cart("+Object.keys(cart).length+")";
+ 
+  });
+  </script>
+</html>
